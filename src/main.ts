@@ -501,22 +501,22 @@ class App implements AfterViewInit, OnDestroy {
     {
       name: 'Founder Name',
       role: 'Co-founder & Director, Startup Name',
-      video: 'founder-catalyst.mp4'
+      video: 'https://res.cloudinary.com/dz1yfypyx/video/upload/v1778869853/founder-catalyst_oofx9b.mp4'
     },
     {
       name: 'Aaradhya Rao',
       role: 'Founder & CEO, Venture Labs',
-      video: 'founder-amaravati.mp4?v=20260512'
+      video: 'https://res.cloudinary.com/dz1yfypyx/video/upload/v1778869840/founder-amaravati_vfgzde.mp4'
     },
     {
       name: 'Kiran Varma',
       role: 'Co-founder, Deeptech Works',
-      video: 'founder-grassip.mp4'
+      video: 'https://res.cloudinary.com/dz1yfypyx/video/upload/founder-grassip_khvd5t.mp4'
     },
     {
       name: 'Meera Singh',
       role: 'Director, Growth Studio',
-      video: 'founder-sunrise.mp4'
+      video: 'https://res.cloudinary.com/dz1yfypyx/video/upload/v1778869890/founder-sunrise_g5moiq.mp4'
     }
   ];
 
