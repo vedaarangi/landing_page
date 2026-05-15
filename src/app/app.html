@@ -1,6 +1,6 @@
 <header class="site-header">
   <a class="brand" href="#" aria-label="RTIH home">
-    <img src="/rtih-logo.png" alt="RTIH">
+    <img src="rtih-logo.png" alt="RTIH">
   </a>
 
   <nav class="main-nav" aria-label="Primary navigation">
@@ -18,7 +18,7 @@
   </nav>
 
   <a class="govt-seal" href="#" aria-label="Government of Andhra Pradesh">
-    <img src="/ap-logo.webp" alt="Government of Andhra Pradesh">
+    <img src="ap-logo.webp" alt="Government of Andhra Pradesh">
   </a>
   <button class="menu-button" type="button" aria-label="Open menu">
     <span></span>
@@ -27,11 +27,21 @@
   </button>
 </header>
 
+<app-social-glass-bar></app-social-glass-bar>
+
 <main>
   <section class="hero" aria-label="Incubation hero">
     <div class="hero-media">
-      <video #heroVideo autoplay muted loop playsinline preload="auto" (loadedmetadata)="heroVideo.muted = true; heroVideo.volume = 0">
-        <source src="/hero-video.mp4" type="video/mp4">
+      <video
+        #heroVideo
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        (loadedmetadata)="heroVideo.muted = true; heroVideo.defaultMuted = true; heroVideo.volume = 0"
+        (canplay)="heroVideo.muted = true; heroVideo.defaultMuted = true; heroVideo.volume = 0">
+        <source [attr.src]="heroVideoSrc" type="video/mp4">
       </video>
     </div>
     <div class="hero-overlay"></div>
@@ -43,23 +53,156 @@
     </div>
   </section>
 
-  <section class="metrics" aria-labelledby="metrics-title">
+  <section class="about" aria-labelledby="about-title">
+    <div class="about-container">
+      <div class="about-media">
+        <p class="about-label">ABOUT US</p>
+        <div class="about-image-shell">
+          <div class="about-glow" aria-hidden="true"></div>
+          <img
+            src="incubation/6A7EE4DF-4157-43FA-A851-78B6789B52DD.jpeg"
+            alt="RTIH AP inauguration ceremony">
+        </div>
+      </div>
+      <div class="about-content">
+        <h2 id="about-title">RTIH AP Incubation Ecosystem</h2>
+        <p class="about-description">
+          RTIH AP empowers startups across Andhra Pradesh with structured incubation, expert mentorship, funding access,
+          and practical innovation support. Through collaboration with universities, industry partners, and ecosystem
+          builders, we help founders validate ideas, accelerate product development, and grow sustainably within a
+          connected startup network.
+        </p>
+        <div class="about-ctas">
+          <a class="about-btn about-btn-primary" href="#programs">Explore Programs <span>→</span></a>
+          <a class="about-btn about-btn-secondary" href="#contact">Learn More <span>↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    #eventsSection
+    class="events-section"
+    [class.reveal-active]="isEventsSectionActive"
+    aria-labelledby="events-title">
+    <div class="events-shell">
+      <div class="events-copy">
+        <p id="events-title" class="events-badge">RTIH AP Events</p>
+        <h2>Empowering Future Innovators Through Events</h2>
+        <p class="events-description">
+          Explore RTIH AP events designed to connect founders, mentors, investors, and ecosystem partners through
+          meaningful startup experiences. From mentorship sessions to networking meetups and funding conversations,
+          each event helps startups learn, grow, and move forward with confidence.
+        </p>
+
+        <div class="events-stats" aria-label="RTIH AP event highlights">
+          <article class="event-stat">
+            <strong>20+</strong>
+            <span>Events</span>
+          </article>
+          <article class="event-stat">
+            <strong>500+</strong>
+            <span>Participants</span>
+          </article>
+          <article class="event-stat">
+            <strong>6</strong>
+            <span>Startups Supported</span>
+          </article>
+        </div>
+
+        <div class="events-actions">
+          <a class="events-btn events-btn-primary" href="#events">Explore Events</a>
+          <a class="events-btn events-btn-secondary" href="#contact">Join Community</a>
+        </div>
+      </div>
+
+      <div class="events-visual" aria-label="RTIH AP event collage">
+        <div class="events-grid">
+          <article
+            class="event-tile"
+            *ngFor="let event of events; let i = index"
+            [style.--event-index]="i">
+            <div class="event-media" [attr.aria-label]="event.imageAlt">
+              <img [src]="event.imageSrc" [alt]="event.imageAlt">
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="metrics"
+    [class.metric-intro-active]="hasMetricIntroStarted"
+    aria-labelledby="metrics-title"
+    #metricsSection>
     <h2 id="metrics-title">The RTIH Network</h2>
-    <div class="metric-marquee" aria-label="RTIH network metrics">
-      <div class="metric-track">
-        <article class="metric-card" *ngFor="let metric of metrics">
-          <strong>{{ metric.value }}</strong>
-          <span>{{ metric.label }}</span>
-        </article>
-        <article class="metric-card" *ngFor="let metric of metrics" aria-hidden="true">
-          <strong>{{ metric.value }}</strong>
+    <div
+      class="metric-carousel"
+      aria-label="RTIH network metrics"
+    >
+      <div
+        class="metric-track">
+        <article
+          class="metric-card"
+          *ngFor="let metric of metrics; let i = index">
+          <strong>{{ animatedMetrics[i % metrics.length] || 0 }}+</strong>
           <span>{{ metric.label }}</span>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="programs" id="programs" aria-labelledby="program-title">
+  <section
+    #ecosystemSection
+    class="ecosystem"
+    [class.reveal-active]="isEcosystemSectionActive"
+    aria-labelledby="ecosystem-title">
+    <div class="ecosystem-shell">
+      <h2 id="ecosystem-title">Our Partners</h2>
+
+      <div class="ecosystem-carousel">
+        <button
+          type="button"
+          class="ecosystem-arrow"
+          aria-label="Scroll partners left"
+          (click)="scrollPartners(-1)">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M14.5 6.5L9 12l5.5 5.5"></path>
+          </svg>
+        </button>
+
+        <div
+          #ecosystemCarousel
+          class="ecosystem-viewport"
+          aria-label="Ratan Tata Innovation Hub ecosystem partners">
+          <div class="ecosystem-strip">
+            <article class="partner-logo" *ngFor="let partner of ecosystemPartners; let i = index" [style.--partner-index]="i">
+              <img *ngIf="partner.logoSrc" [src]="partner.logoSrc" [alt]="partner.logoAlt || partner.name">
+              <small>{{ partner.name }}</small>
+            </article>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="ecosystem-arrow"
+          aria-label="Scroll partners right"
+          (click)="scrollPartners(1)">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9.5 6.5L15 12l-5.5 5.5"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section
+    #programsSection
+    class="programs"
+    [class.reveal-active]="isProgramsSectionActive"
+    id="programs"
+    aria-labelledby="program-title">
     <div class="section-heading">
       <h2 id="program-title">How You Benefit</h2>
     </div>
@@ -67,7 +210,7 @@
       <article
         class="program-card"
         *ngFor="let program of programs; let i = index"
-        [style.--i]="i"
+        [style.--program-index]="i"
         tabindex="0">
         <div class="program-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" focusable="false">
@@ -76,15 +219,144 @@
         </div>
         <h3>{{ program.title }}</h3>
         <p>{{ program.text }}</p>
-        <span class="program-arrow" aria-hidden="true">→</span>
       </article>
     </div>
   </section>
 
+  <section class="incubation-programs" aria-labelledby="incubation-programs-title">
+    <div class="section-heading">
+      <h2 id="incubation-programs-title">Incubation Programs</h2>
+      <p class="section-copy">Explore RTIH’s incubation pathway with ongoing and past program tracks.</p>
+    </div>
+    <div class="program-tabs" role="tablist" aria-label="Incubation program tabs">
+      <button
+        type="button"
+        role="tab"
+        [attr.aria-selected]="selectedProgramTab === 'ongoing'"
+        [class.active]="selectedProgramTab === 'ongoing'"
+        (click)="selectProgramTab('ongoing')">
+        Ongoing Programs
+      </button>
+      <button
+        type="button"
+        role="tab"
+        [attr.aria-selected]="selectedProgramTab === 'past'"
+        [class.active]="selectedProgramTab === 'past'"
+        (click)="selectProgramTab('past')">
+        Past Programs
+      </button>
+    </div>
+    <div class="incubation-carousel">
+      <button
+        type="button"
+        class="incubation-arrow"
+        aria-label="Scroll incubation programs left"
+        (click)="scrollIncubationPrograms(-1)">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M14.5 6.5L9 12l5.5 5.5"></path>
+        </svg>
+      </button>
+
+      <div
+        #incubationCarousel
+        class="incubation-viewport"
+        aria-label="Incubation programs">
+        <div class="incubation-strip">
+          <article class="incubation-card" *ngFor="let program of activePrograms">
+            <div class="incubation-card-image" *ngIf="program.imageSrc">
+              <img [src]="program.imageSrc" [alt]="program.title">
+            </div>
+            <div class="incubation-card-content">
+              <h4>{{ program.title }}</h4>
+              <p>{{ program.details }}</p>
+              <a href="#" class="incubation-read-more">Read More <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="incubation-arrow"
+        aria-label="Scroll incubation programs right"
+        (click)="scrollIncubationPrograms(1)">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9.5 6.5L15 12l-5.5 5.5"></path>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <section
+    #seedFundSection
+    class="seed-fund-section"
+    [class.reveal-active]="isSeedFundSectionActive"
+    aria-labelledby="seed-fund-title">
+    <div class="seed-fund-shell">
+      <div class="seed-fund-copy">
+        <h2 id="seed-fund-title">RTIH–SIDBI Seed Fund Program</h2>
+        <div class="seed-fund-badge" aria-label="Ticket size">
+          ₹10L – ₹1Cr
+        </div>
+
+        <p class="seed-fund-description">
+          Eligible RTIH incubated startups can access seed funding support through the RTIH–SIDBI partnership initiative designed to accelerate innovation, product development, and startup growth.
+        </p>
+
+        <a class="seed-fund-cta" href="#apply">Apply for Funding</a>
+      </div>
+
+      <div class="seed-fund-visual" aria-label="RTIH SIDBI memorandum image">
+        <div class="seed-fund-image-card">
+          <img
+            src="seed-fund-image.jpg"
+            alt="RTIH and SIDBI partnership">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="startups"
+    [class.portfolio-active]="isStartupPortfolioActive"
+    aria-labelledby="startups-title"
+    #startupSection>
+    <div class="startups-head">
+      <h2 id="startups-title">Startup Portfolio</h2>
+    </div>
+
+    <div class="startup-grid">
+      <article class="startup-card" *ngFor="let startup of featuredStartupCards; let i = index" [style.--i]="i" tabindex="0">
+        <div class="startup-top">
+          <div class="startup-mark" aria-hidden="true">
+            <img [src]="startup.logoSrc" [alt]="startup.alt">
+          </div>
+          <div class="startup-meta">
+            <h3>{{ startup.name }}</h3>
+            <p>{{ startup.year }}</p>
+          </div>
+        </div>
+
+        <p class="startup-summary">{{ startup.summary }}</p>
+      </article>
+    </div>
+
+    <div class="startups-footer">
+      <a class="view-all-startups" href="#contact">
+        <span>View All Startups</span>
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+          <path d="M7 5h8v8"></path>
+          <path d="M5 15l10-10"></path>
+        </svg>
+      </a>
+    </div>
+  </section>
+
   <section class="voices" aria-labelledby="voices-title">
-    <div class="voice-feature">
+    <div class="voice-feature relative mx-auto w-[380px] aspect-[4/6] overflow-hidden rounded-[12px] bg-[#e9edf2] md:w-[430px]">
       <video
         #storyClip
+        class="h-full w-full object-cover"
         autoplay
         [muted]="isStoryMuted"
         playsinline
@@ -114,8 +386,16 @@
       <h3>{{ activeStory.name }}</h3>
       <p>{{ activeStory.role }}</p>
       <div class="story-controls" aria-label="Story controls">
-        <button type="button" aria-label="Previous story" (click)="showPreviousStory(storyClip)">‹</button>
-        <button type="button" aria-label="Next story" (click)="showNextStory(storyClip)">›</button>
+        <button class="story-nav-btn" type="button" aria-label="Previous story" (click)="showPreviousStory(storyClip)">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M15 6l-6 6 6 6"></path>
+          </svg>
+        </button>
+        <button class="story-nav-btn" type="button" aria-label="Next story" (click)="showNextStory(storyClip)">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 6l6 6-6 6"></path>
+          </svg>
+        </button>
       </div>
       <div class="thumb-row">
         <button
@@ -137,13 +417,144 @@
       </div>
     </div>
   </section>
+
+  <section class="cta-section" id="apply" aria-labelledby="cta-title">
+    <div class="cta-shell">
+      <div class="cta-form-panel">
+        <div class="cta-form-card">
+          <p class="cta-form-kicker">Apply to RTIH AP</p>
+          <h3>Tell us about your startup</h3>
+
+          <form class="cta-form">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" placeholder="Your name">
+            </label>
+
+            <label>
+              <span>Startup Idea</span>
+              <textarea name="startup-idea" rows="4" placeholder="Briefly describe your idea"></textarea>
+            </label>
+
+            <label>
+              <span>Program</span>
+              <select name="program">
+                <option value="" selected>Choose a program</option>
+                <option value="spark">SPARK</option>
+                <option value="future-founders">FUTURE FOUNDERS</option>
+                <option value="catalyst">CATALYST</option>
+                <option value="velocity-lab">VELOCITY LAB</option>
+                <option value="innotribe">INNOTRIBE</option>
+              </select>
+            </label>
+
+            <button type="button" class="cta-submit">Apply Now</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="cta-content">
+        <p class="cta-eyebrow">RTIH AP Incubation</p>
+        <h2 id="cta-title">
+          <span>Build Your Startup</span>
+          <span>With RTIH AP</span>
+        </h2>
+        <p class="cta-copy">
+          Join a focused incubation ecosystem designed for founders who want real mentorship, funding access, innovation support, and a clearer path from idea to scale.
+        </p>
+
+        <div class="cta-points" aria-label="RTIH support areas">
+          <span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"></path>
+              <circle cx="12" cy="8" r="5"></circle>
+            </svg>
+            Mentorship
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 18V6"></path>
+              <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path>
+              <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            </svg>
+            Funding
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 20V9l8-5 8 5v11"></path>
+              <path d="M9 20v-6h6v6"></path>
+            </svg>
+            Workspace
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M13 3L5 14h6l-1 7 9-12h-6l0-6Z"></path>
+            </svg>
+            Growth
+          </span>
+        </div>
+
+        <div class="cta-contact" aria-label="Contact details">
+          <a href="mailto:hello@example.com" class="cta-contact-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 6h16v12H4z"></path>
+              <path d="m4 7 8 6 8-6"></path>
+            </svg>
+            <span>connect@rtih.co.in</span>
+          </a>
+          <a href="tel:+91 73968 52244" class="cta-contact-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M6.5 3.5h3l1.5 4-2 1.8a14 14 0 0 0 6.7 6.7l1.8-2 4 1.5v3a2 2 0 0 1-2.1 2A18.9 18.9 0 0 1 4.5 5.6a2 2 0 0 1 2-2.1Z"></path>
+            </svg>
+            <span>+91 73968 52244</span>
+          </a>
+          <span class="cta-contact-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10Z"></path>
+              <path d="M12 12.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+            </svg>
+            <span>Amaravati, Andhra Pradesh</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="our-stories" aria-labelledby="stories-title">
+    <div class="stories-container">
+      <div class="stories-header">
+        <h2 id="stories-title"><span>Testimonials</span></h2>
+      </div>
+
+      <div class="stories-body">
+        <div class="testimonials-viewport" aria-hidden="false">
+          <div class="testimonial-track" #testimonialTrack role="list">
+            <article class="testimonial-card" *ngFor="let testimonial of visibleTestimonials; let i = index" role="listitem" [class.active]="i === 1">
+              <span class="quote-mark open-quote">“</span>
+              <p class="testimonial-text">{{ testimonial.text }}</p>
+              <span class="quote-mark end-mark">”</span>
+              <div class="testimonial-author">
+                <div class="author-image" *ngIf="testimonial.logoSrc">
+                  <img [src]="testimonial.logoSrc" [alt]="testimonial.name" class="profile-img">
+                </div>
+                <div class="author-info">
+                  <h3>{{ testimonial.name }}</h3>
+                  <p>{{ testimonial.title }}, {{ testimonial.company }}</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="footer" id="contact">
   <div class="footer-main">
     <div class="footer-brand">
       <a class="brand footer-logo" href="#" aria-label="RTIH home">
-        <img src="/rtih-logo.png" alt="RTIH">
+        <img src="rtih-logo.png" alt="RTIH">
       </a>
       <p>Ratan Tata Innovation Hub supports innovation, incubation, partnerships, and opportunity across Andhra Pradesh.</p>
     </div>
