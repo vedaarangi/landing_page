@@ -361,7 +361,7 @@
         [muted]="isStoryMuted"
         playsinline
         preload="auto"
-        [src]="activeStory.video"
+        [src]="resolveAsset(activeStory.video)"
         (loadedmetadata)="prepareStoryVideo(storyClip)"
         (timeupdate)="advanceStoryAfterTenSeconds(storyClip)">
       </video>
@@ -409,9 +409,9 @@
             #thumbClip
             muted
             playsinline
-            preload="metadata"
-            [src]="story.video"
-            (loadedmetadata)="prepareThumbnail(thumbClip)">
+            preload="auto"
+            [src]="resolveAsset(story.video)"
+            (loadeddata)="prepareThumbnail(thumbClip)">
           </video>
         </button>
       </div>

@@ -77,6 +77,7 @@ type EventCard = {
 })
 class App implements AfterViewInit, OnDestroy {
   heroVideoSrc = 'https://res.cloudinary.com/dz1yfypyx/video/upload/f_mp4/1778867189233540_ewf2jd.mp4';
+  private readonly localAssetBase = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app') ? '/' : './';
 
   @ViewChild('metricsSection') metricsSection?: ElementRef<HTMLElement>;
   @ViewChild('eventsSection') eventsSection?: ElementRef<HTMLElement>;
@@ -559,6 +560,14 @@ class App implements AfterViewInit, OnDestroy {
 
   get activeStory(): Story {
     return this.stories[this.activeStoryIndex];
+  }
+
+  resolveAsset(path: string): string {
+    if (/^(https?:)?\/\//.test(path)) {
+      return path;
+    }
+
+    return `${this.localAssetBase}${path.replace(/^\/+/, '')}`;
   }
 
   prepareStoryVideo(video: HTMLVideoElement): void {
